@@ -1,0 +1,400 @@
+<!doctype html>
+<html class="no-js" lang="pl">
+    <head>
+        <meta charset="utf-8">
+        <title>Pasta i basta</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/styles.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Amatic+SC" />
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    </head>
+    <a name="top"></a>
+    <body>
+    <header class="grid-container">
+            <div id="head-image">
+                <p>Pasta i basta!</p>
+            </div>
+            <nav>
+            <ol id="menu">
+                <li><a href="#introduction" title="Dowiedz się więcej o naszych potrawach!">Coś o nas</a></li>
+                <li><a href="#spaghetti_logo" title="Najlepsze przepisy na makaron po włosku">Makarony</a></li>
+                <li><a href="#pizza_logo" title="Pyszne neapolitańskie ciasto i pizza z twistem">Pizza</a></li>
+                <li><a href="#meat_logo" title="Przepis na delikatnego królika i złocistego kurczaka">Mięso</a></li>
+            </ol>
+            </nav>
+    </header>
+    <div id="form_box">
+        <div id="box_content">
+            <div id="side_box">Dodaj przepis</div>
+        <div id="inside">
+            <form class="form" id="sendReceipt" method="post" onsubmit="createNewReceipt();hoover();return false;">
+                <div class="column-full">
+                <div class="form-row">
+                    <label>Nazwa potrawy</label>
+                    <input id="formName" type="text" data-error-message="Wypełnij to pole prawidłowymi wartościami" pattern="[a-zA-ZąĄććęęłŁńŃóÓśŚżŻŹŹ ]+" required/>
+                </div>
+                <div class="form-row">
+                    <label>Zdjęcie</label>
+                    <input id="formImage" type="url" pattern="https://.*" required/>
+                </div>
+                <div class="form-row">
+                    <label>Czas przygotowania</label>
+                    <input id="formTime" type="number" min="0.1" step="0.1" required/>
+                    <select id="timeSel" name="time">
+                        <option value="min">min</option>
+                        <option value="hours">godz</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <label>Liczba porcji</label>
+                    <input id="formPortion" type="number" min="1" required/>
+                </div>
+                </div>
+                <div class="form-row column" id="dynamicIng">
+                    <label>Lista składników</label>
+                    <br />
+                    <input type="text" name="ingredients[]" required/>
+                    <br />
+                    <input type="button" onclick="addIngridient(this)" value="Dodaj składnik">
+                    <input type="button" onclick="removeIngridient()" value="Usuń składnik">
+                </div>
+                <div class="form-row column" id="dynamicRec">
+                    <label>Przepis</label>
+                    <br />
+                    <input type="text" name="steps[]" required/>
+                    <br />
+                    <input type="button" onclick="addStep(this)" value="Dodaj kolejny krok">
+                    <input type="button" onclick="removeStep()" value="Usuń poprzedni krok">
+                </div>
+                <div id="bottom" class="form-row column-full">
+                    <button type="submit">
+                        Zamieść na stronie
+                    </button>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+    <section class="grid-container" id="introduction">
+        <p>Szukasz pomysłu na elegancką kolację przy świecach? A może niedzielny obiad z rodziną? Kuchnia włoska w swoim bogactwie przepisów inspiruje
+        do tworzenia potraw na każdą okazję. Jeśli użyjesz świeżych, lokalnych produktów, nawet najprostsze danie godne będzie 5 gwiazdkowej restauracji.
+        Poniżej prezentujemy najciekawsze, oryginalne, włoskie potrawy, spośród których każdy znajdzie coś dla siebie. Jeśli jesteś jeszcze niedoświadczonym kucharzem
+        polecamy zacząć od przepisów na makarony i pizze. Jeśli na gotowaniu zjadłeś już zęby, to z pewnością zainteresuje cię sekcja mięs. Zapraszamy do rozpoczęcia
+        przygody z kuchnią włoską!</p>
+        <img id="intro_image" src="img/intro.jpg" alt="Antipasti: wine, ham, olives, melon with prosciutto and rustic bread">
+    </section>
+    <section class="grid-container">
+        <div class="section_header spaghetti">
+        <img class="logo" id="spaghetti_logo" src="img/spaghetti.png" alt="Spaghetti logo, section of noodles">
+        </div>
+        <div class="item">
+            <header>
+                <h2 class="mini_header spaghetti">SPAGHETTI CARBONARA</h2>
+            </header>
+            <input type="image" class="image_recipe" src="img/carbonara.jpeg" alt="Picture of spaghetti carbonara" onclick="showRecipe(0)">
+        </div>
+        <div class="item">
+            <header>
+                <h2 class="mini_header spaghetti">SPAGHETTI AL TONNO</h2>
+            </header>
+            <input type="image" class="image_recipe" src="img/al_tono.png" alt="Picture of spaghetti al tonno" onclick="showRecipe(1)">
+        </div>
+        <div class="item">
+            <header>
+                <h2 class="mini_header spaghetti">SPAGHETTI ALLA PUTTANESCA</h2>
+            </header>
+            <input type="image" class="image_recipe" src="img/spaghetti-alla-puttanesca.jpg" alt="Picture of spaghetti alla puttanesca" onclick="showRecipe(2)">
+        </div>
+            <div class="components_container spaghetti grid-container">
+                <h5 class="components_header tl">4 PORCJE | 30 MINUT</h5>
+                <h3 class="components_header tr">Przygotowanie:</h3>
+            <h3 class="components_header bl">Lista składników:</h3>
+                <ol class="recipe">
+                    <li>Odetnij skórkę guanciale, wrzuć ją do blendera razem z borowikami, rozdrobnionym chlebem i rozmarynem, całość zmiksuj na bułkę tartą</li>
+                    <li>Wsyp mieszankę na patelnię, praż do zrumienienia</li>
+                    <li>Na tej samej pateli upraż ziarna pieprzu, następnie utłucz je w moździerzu na proszek </li>
+                    <li>Makaron ugotuj zgodnie z instrukcją na opakowaniu</li>
+                    <li>Pokrój guanciale w paski szerokości 0,5 cm, smaż je na patelni wraz z pieprzem tak długo, aż tłuszcz się wytopi</li>
+                    <li>W misce ubij jajka, następnie dodaj do nich starty parmezan</li>
+                    <li>Szczypcami przełóż makaron na patelnię, wymieszaj wszystkie składniki, następnie zdejmij patelnię z ognia i odczekaj około 2 minuty</li>
+                    <li>Do makaronu wlej masę jajeczną, wymieszaj całość</li>
+                    <li>Podawaj z resztą startego parmezanu i uprzednio przygotowaną bułką tartą</li>
+                </ol>
+                    <ul class="components">
+                        <li>80 g guanciale (wędzonego policzka wieprzowego) lub wędzonej pancetty</li>
+                        <li>10 g suszonych borowików</li>
+                        <li>2 gałązki świeżego rozmarynu</li>
+                        <li>80 g czerstwego wiejskiego chleba</li>
+                        <li>pół łyżki czarnego pieprzu</li>
+                        <li>170 g makaronu spaghetti</li>
+                        <li>2 duże jajka</li>
+                        <li>50 g parmezanu</li>
+                    </ul>
+            </div>
+            <div class="components_container spaghetti">
+                <h5 class="components_header tl">2 PORCJE | 25 MINUT</h5>
+                <h3 class="components_header tr">Przygotowanie:</h3>
+            <h3 class="components_header bl">Lista składników:</h3>
+            <ul class="components">
+                <li>2 łyżki oliwy extra virgin</li>
+                <li>1/2 cebuli, drobno posiekanej</li>
+                <li>300 g krojonych pomidorów (z puszki bądź świeżych)</li>
+                <li>świeże zioła, oregano bądź tymianek</li>
+                <li>mała puszka tuńczyka w oliwie</li>
+                <li>170 g makaronu spaghetti</li>
+                <li>3 fileciki anchois w oleju</li>
+                <li>garść oliwek</li>
+                <li>tarty parmezan</li>
+            </ul>
+            <ol class="recipe">
+                <li>Makaron ugotuj al dente w osolonej wodzie</li>
+                <li>Rozgrzej oliwę na patelni, następnie zeszklij cebulę, dodaj anchois</li>
+                <li>Na patelnię dodaj pomidory, dopraw solą, pieprzem i odrobiną cukru</li>
+                <li>Sos gotuj około 10 minut, następnie dodaj tuńczyka i oliwki</li>
+                <li>Sos gotuj jeszcze przez ok. 7 minut, następnie dodaj świeże zioła</li>
+                <li>Wymieszaj ugotowany makaron z sosem, danie podawaj posypane parmezanem</li>
+            </ol>
+            </div>
+            <div class="components_container spaghetti">
+                <h5 class="components_header tl">2 PORCJE | 40 MINUT</h5>
+                <h3 class="components_header tr">Przygotowanie:</h3>
+            <h3 class="components_header bl">Lista składników:</h3>
+            <ul class="components">
+                <li>200 g makaronu spaghetti</li>
+                <li>2 łyżki oliwy extra virgin</li>
+                <li>3 ząbki czosnku</li>
+                <li>4 fileciki anchois</li>
+                <li>garść czarnych oliwek</li>
+                <li>czubata łyżka kaparów</li>
+                <li>1/3 łyżeczki płatków chilli</li>
+                <li>pół łyżeczki oregano</li>
+                <li>puszka krojonych pomidorów</li>
+                <li>natka pietruszki</li>
+            </ul>
+            <ol class="recipe">
+                <li>Makaron ugotuj według instrukcji na opakowaniu</li>
+                <li>W czasie gdy makaron się gotuje, rozpocznij przygotowywanie sosu: na rozgrzanej oliwie podsmaż pokrojony w plasterki czosnek</li>
+                <li>Na patelnię dodaj fileciki anchois i oliwki, i smaż przez około 4 minuty</li>
+                <li>Dodaj odcedzone kapary i smaż kolejne 4 minuty, rozgniatając jednocześnie oliwki</li>
+                <li>Dorzuć płatki chilli i oregano, i podsmażaj całość jeszcze przez chwilę</li>
+                <li>Dodaj pomidory z puszki, całość zagotuj, dodaj sól i pieprz, i duś przez około 15 minut</li>
+                <li>Szczypcami przełóż makaron do sosu, wymieszaj całość</li>
+                <li>Danie przełóż na talerz i przed podaniem posyp natką pietruszki</li>
+            </ol>
+            </div>
+    </section>
+    <section class="grid-container">
+        <div class="section_header pizza">
+            <img class="logo" id="pizza_logo" src="img/pizza.jpg" alt="Pizza logo, section of pizza">
+        </div>
+        <div class="item">
+            <header>
+                <h2 class="mini_header pizza">NEAPOLITAŃSKIE CIASTO DO PIZZY</h2>
+            </header>
+            <input type="image" class="image_recipe" src="img/pizza_dough.jpg" alt="Picture of pizza dough" onclick="showRecipe(3)">
+        </div>
+        <div class="item">
+            <header>
+                <h2 class="mini_header pizza">PARMA</h2>
+            </header>
+            <input type="image" class="image_recipe" src="img/parma.jpg"alt="Picture of pizza parma" onclick="showRecipe(4)">
+        </div>
+        <div class="item">
+            <header>
+                <h2 class="mini_header pizza">PIZZA FRITTA</h2>
+            </header>
+            <input type="image" onclick="showRecipe(5)" class="image_recipe" src="img/pizza_fritta.jpg"alt="Picture of pizza fritta">
+        </div>
+            <div class="components_container pizza">
+                <h5 class="components_header tl">6 PIZZ | 45 MINUT I WYRASTANIE</h5>
+                <h3 class="components_header tr">Przygotowanie:</h3>
+                <h3 class="components_header bl">Lista składników:</h3>
+                <ul class="components">
+                    <li>1 kg mąki typu 00 i więcej do podsypywania</li>
+                    <li>7 g suszonych drożdży</li>
+                    <li>oliwa</li>
+                    <li>700 ml ciepłej wody</li>
+                    <li>10 g soli morskiej</li>
+                </ul>
+                <ol class="recipe">
+                    <li>Z wody, garści mąki, soli i drożdży zrób zaczyn, odstaw go na 5 minut</li>
+                    <li>Do zaczynu powoli dodawaj resztę mąki i wyrabiaj, aż uzyskasz sprężyste miękkie ciasto</li>
+                    <li>Przełóż ciasto na stolnicę opruszoną mąką, wyrabiaj jeszcze około 15 minut</li>
+                    <li>Przełóż ciasto do miski wysmarowanej oliwą i zostaw do wyrośnięcia na około 1 godzinę</li>
+                    <li>Podziel ciasto na 6 równych porcji, uformowane z nich kulki połóż na blaszę i wstaw na noc do lodówki</li>
+                    <li>Następnego dnia rozgrzej piekarnik do 240 stopni Celcjusza i włóż do niego kamień do pizzy</li>
+                    <li>Zgnieć ciasto na gruby krążek, następnie rozciągaj go palcami aż uzyskasz pożądaną grubość</li>
+                    <li>Na ciasto nałóż ulubione dodatki</li>
+                    <li>Przełóż ciasto na kamień do pizzy i piecz je 7-8 minut</li>
+                </ol>
+            </div>
+            <div class="components_container pizza">
+                <h5 class="components_header tl">2 PIZZE | 20 MINUT I PRZYGOTOWANIE CIASTA</h5>
+                <h3 class="components_header tr">Przygotowanie:</h3>
+                <h3 class="components_header bl">Lista składników:</h3>
+                <ul class="components">
+                    <li>składniki na ciasto neapolitańskie wg przepisu obok</li>
+                    <li>1/2 puszki pomidorów krojonych lub pulpy</li>
+                    <li>łyżka oliwy z oliwek</li>
+                    <li>oregano, sól, pieprz, cukier</li>
+                    <li>1 kulka mozzarelli</li>
+                    <li>6 plasterków cienko pokrojonej szynki parmeńskiej</li>
+                    <li>2 duże garście rukoli</li>
+                    <li>pęczek świeżej bazylii</li>
+                </ul>
+                <ol class="recipe">
+                    <li>Ciasto na pizzę przygotuj z przepisu na ciasto neapolitańskie</li>
+                    <li>Zagotuj pomidory wraz z oliwą, dodaj sól, cukier, pieprz i oregano, gotuj przez około 10 minut</li>
+                    <li>Kiedy ciasto już wyrośnie, posmaruj je sosem pomidorowym</li>
+                    <li>Na pizzy ułóż plasterki szynki, mozzarellę i pomidorki koktajlowe</li>
+                    <li>Piecz pizzę w piekarniku rozgrzanym do 250 stopni Celcjusza, najlepiej na kamieniu do pizzy, przez około 8 minut</li>
+                    <li>Przed podaniem rozsyp na pizzy rukolę i bazylię</li>
+                </ol>
+            </div>
+            <div class="components_container pizza">
+                <h5 class="components_header tl">12 PIZZ | 1 GODZINA I PRZYGOTOWANIE CIASTA</h5>
+                <h3 class="components_header tr">Przygotowanie:</h3>
+                <h3 class="components_header bl">Lista składników:</h3>
+                <ul class="components">
+                    <li>składniki na ciasto neapolitańskie według przepisu obok</li>
+                    <li>1 puszka pomidorów krojonych lub pulpy</li>
+                    <li>łyżka oliwy</li>
+                    <li>posiekany czosnek i 1/2 cebuli</li>
+                    <li>mąka do podsypywania</li>
+                    <li>100 g parmezanu</li>
+                    <li>500 g ricotty</li>
+                    <li>400 g mozzarelli</li>
+                    <li>pęczek świeżej bazylii</li>
+                    <li>2 l oleju roślinnego do smażenia</li>
+                </ul>
+                <ol class="recipe">
+                    <li>Przygotuj ciasto neapolitańskie na pizzę, ale odstaw je do wyrośnięcia tylko na 1 godzinę</li>
+                    <li>Podsmaż na oliwię czosnek i cebulę, dodaj pomidory, cukier, sól, pieprz i oregano, gotuj przez około 15 minut</li>
+                    <li>Ciasto podziel na 12 części, odstaw na 10 minut do wyrośnięcia</li>
+                    <li>Rozciągnij ciasto na placki ośrednicy 15 cm, wymieszaj ricottę z drobno startym parmezanem, rozdziel masę na 12 placków</li>
+                    <li>Posyp całość kawałkami mozzarelli, dopraw i złoż ciasto na pół na kształt pieroga</li>
+                    <li>Do dużego rondla wlej olej i poczekaj, aż dobrze się rozgrzeje</li>
+                    <li>Delikatnie wrzucaj po dwie pizze na tłuszcz, smaż po 1 1/2 minuty z każdej strony</li>
+                    <li>Pizzę odstaw do odcieknięcia na papierowy ręcznik</li>
+                    <li>Podawaj z wcześniej przygotowanym sosem pomidorowym</li>
+                </ol>
+            </div>
+    </section>
+    <section class="grid-container">
+        <div class="section_header meat">
+            <img class="logo" id="meat_logo" src="img/meat.png" alt="Meat logo, you are entering meat section">
+        </div>
+        <div class="item">
+            <header>
+                <h2 class="mini_header meat">SZAFRANOWY KURCZAK</h2>
+            </header>
+            <input type="image" onclick="showRecipe(6)" class="image_recipe" src="img/saffron_chicken.jpg" alt="Picture of saffron chicken">
+        </div>
+        <div class="item">
+            <header>
+                <h2 class="mini_header meat">DUSZONY KRÓLIK</h2>
+            </header>
+            <input type="image" onclick="showRecipe(7)" class="image_recipe" src="img/rabbit.jpg"alt="Picture of rabbit stew">
+        </div>
+        <div class="item">
+            <header>
+                <h2 class="mini_header meat">TUŃCZYK W ZŁOTEJ PANIERCE</h2>
+            </header>
+            <input type="image" onclick="showRecipe(8)" class="image_recipe" src="img/tuna.jpg"alt="Picture of golden tuna">
+        </div>
+            <div class="components_container meat">
+                <h5 class="components_header tl">4-6 PORCJI | 1 GODZINA 30 MINUT I MARYNOWANIE</h5>
+                <h3 class="components_header tr">Przygotowanie:</h3>
+                <h3 class="components_header bl">Lista składników:</h3>
+                <ul class="components">
+                    <li>1 cały kurczak (ok. 1,4 kg)</li>
+                    <li>duża szczypta szafranu</li>
+                    <li>oliwa</li>
+                    <li>200 ml marsali</li>
+                    <li>600 g pomidorków koktajowych w różnych kolorach</li>
+                    <li>pęczek świeżego oregano</li>
+                    <li>dwa ząbki czosnku</li>
+                    <li>100 g blanszowanych migdałów</li>
+                    <li>100 g czerstwego wiejskiego chleba</li>
+                </ul>
+                <ol class="recipe">
+                    <li>Do miski wsyp szafran, zalej go odrobiną wrzątku, odczekaj 2 minuty, a następnie dodaj marsalę, 2 łyżki oliwy, sól i pieprz</li>
+                    <li>Marynatę przelej do plastikowej torebki na żywność, włóż do niej kurczaka i wmasuj marynatę w mięso</li>
+                    <li>Kurczaka marynuj przez co najmniej 8 godzin, najlepiej całą noc</li>
+                    <li>Rozgrzej piekarnik do 180 stopni Celcjusza, kurczaka rozkrój od strony grzbietu tak żeby dało się go rozłożyć na płasko</li>
+                    <li>Połóż kurczaka skórą do góry brytfanny, piecz przez 40 minut pod rusztem</li>
+                    <li>W osobnej brytfannie wymieszaj pomidorki, oliwę, sól, pieprz i oregano</li>
+                    <li>Po upływie 40 minut zmiksuj 2 łyżki tłuszczu z kurczaka, migdały, chleb i czosnek, powstałą panierką posyp kurczaka</li>
+                    <li>Kurczaka piecz jeszcze przez 20 minut, pod nim zapiekaj również pomidorki</li>
+                </ol>
+            </div>
+            <div class="components_container meat">
+                <h5 class="components_header tl">4 PORCJE | 1 GODZINA 15 MINUT</h5>
+                <h3 class="components_header tr">Przygotowanie:</h3>
+                <h3 class="components_header bl">Lista składników:</h3>
+                <ul class="components">
+                    <li>50 g wędzonej pancetty</li>
+                    <li>1 cały królik, rozebrany, z podrobami</li>
+                    <li>oliwa</li>
+                    <li>75 g masła</li>
+                    <li>2 czerwone i 2 żółte papryki</li>
+                    <li>główka czosnku</li>
+                    <li>1/2 pęczka świeżego rozmarynu</li>
+                    <li>2 filety z sardeli w oliwie</li>
+                    <li>300 ml białego wina soave</li>
+                    <li>biały ocet winny</li>
+                </ul>
+                <ol class="recipe">
+                    <li>Rozgrzej piekarnik do 190 stopni Celcjusza, pancettę pokrój na małe kawałeczki, królika natrzyj solą, pieprzem i oliwą</li>
+                    <li>Postaw rondel na ogniu i rozpuść w nim 50 g masła, zrumień na nim wszystkie części królika (z wyjątkiem podrobów)</li>
+                    <li>Paprykę pokrój na niewielkie kawałki</li>
+                    <li>Zlej rozpuszczone masło z rondla i dodaj pozostałe 25 g świeżego, pancettę oraz podroby (mogą być drobno posiekane)</li>
+                    <li>Dodaj przekrojoną na pół główkę czosnku, rozmaryn i sardele, kiedy składniki się przyrumienią dodaj paprykę i białe wino</li>
+                    <li>Kiedy wino w połowie odparuje, przykryj rondel zwilżonym papierem do pieczenia i wstaw na 40 minut do piekarnika</li>
+                    <li>Wyjmij paprykę i dodaj ocet, piecz kolejne 10 minut. Podawaj z ziemniakami bądź ryżem</li>
+                </ol>
+            </div>
+            <div class="components_container meat">
+                <h5 class="components_header tl">2 PORCJE | 15 MINUT</h5>
+                <h3 class="components_header tr">Przygotowanie:</h3>
+                <h3 class="components_header bl">Lista składników:</h3>
+                <ul class="components">
+                    <li>1 łyżka kaparów w zalewie</li>
+                    <li>150 g spaghetti</li>
+                    <li>2 świeże steki z tuńczyka złotego</li>
+                    <li>1 jajko</li>
+                    <li>50 g bułki tartej</li>
+                    <li>ząbek czosnku</li>
+                    <li>1 świeża papryczka chilli</li>
+                    <li>2 gałązki natki pietruszki</li>
+                    <li>30 g pecorino lub parmezanu</li>
+                    <li>cytryna</li>
+                </ul>
+                <ol class="recipe">
+                    <li>Makaron ugotuj według instrukcji na opakowaniu</li>
+                    <li>Tuńczyka posól i popieprz z obu stron, zanurz go w ubitym jajku, a następnie w bułce tartej</li>
+                    <li>Posiekaj w plasterki czosnek, chilli oraz natkę pietruszki, zetrzyj ser na drobnej tarce</li>
+                    <li>Rozgrzej dwie patelnie, na jednej z nich na oliwie przysmaż tuńczyka, na każdej ze stron po 1-2 minuty</li>
+                    <li>Na drugiej patelni podsmaż na oliwie czosnek, chilli oraz kapary</li>
+                    <li>Odcedzone spaghetti przełóż na dużą patelnię,polej je sokiem z połowy cytryny i mieszaj, aż powstanie jedwabisty sos</li>
+                    <li>Rozdziel makaron na talerze, na każdej porcji połóż przekrojonego na pół tuńczyka</li>
+                    <li>Podawaj z ćwiartkami cytryny, posypany ziołami i serem</li>
+                </ol>
+            </div>
+    </section>
+   <footer class="grid-container">
+       <div id="logo_bottom">
+            <img src="img/bottom_logo.png" alt="Bowl of spaghetti">
+       </div>
+       <div id="footer_description">
+           <p>Strona internetowa przygotowana na laboratorium z Wprowadzenia do Aplikacji Internetowych</p>
+           <p>Autor: Anna Zając</p>
+       </div>
+       <div id="return_on_top">
+       <a href="#top" title="Powrót na górę strony"><img src="img/home.png"></a>
+       </div>
+   </footer>
+    </body>
+    <script src="js/main.js"></script>
+</html>
