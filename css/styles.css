@@ -452,6 +452,19 @@ body{
      nav{
          grid-column: 1/span 2;
      }
+     .deleteButton{
+         width: 5em;
+         height: 5em;
+         left: 70%;
+     }
+     .deleteButton img{
+         width: 4em;
+         height: 4em;
+     }
+     #form_box{
+         height:70vh;
+         top: 10em;
+     }
      #head-image{
          grid-column: 1/ span 2;
      }
@@ -460,9 +473,6 @@ body{
          margin-left: auto;
          margin-right: auto;
      }
-    #form_box{
-        display: none;
-    }
      #menu > li{
          width: 50%;
      }
@@ -519,9 +529,14 @@ body{
 }
 
 @media screen and (max-width: 448px) {
-    #head-image p{
+    #head-image p {
         font-size: 4.5rem;
     }
+    #form_box {
+        right: -20.3em;
+        width: 20em;
+    }
+}
 
     @media screen and (max-width: 334px) {
         #title {
@@ -550,4 +565,3 @@ body{
             margin-left: auto;
         }
     }
-}

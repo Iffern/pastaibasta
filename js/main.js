@@ -6,6 +6,7 @@ var navbar=document.getElementsByTagName("nav");
 var sticky = navbar[0].offsetTop;
 var mediaq1 = window.matchMedia("(max-width: 950px)");
 var mediaq2 = window.matchMedia("(max-width: 1164px)");
+var mediaq3 = window.matchMedia("(max-width: 448px)");
 const form=document.querySelector('form');
 var numOfNewReceipts=0;
 var totalReceipts=0;
@@ -104,9 +105,10 @@ function createNewReceipt() {
         stepsList.appendChild(newStep);
     }
     for(let i=0;i<steps.length;i++){
+        if(steps[i].value!==""){
         let newStep=document.createElement("li");
         newStep.textContent=steps[i].value;
-        stepsList.appendChild(newStep);
+        stepsList.appendChild(newStep);}
     }
     receiptContainer.appendChild(stepsList);
 
@@ -256,9 +258,15 @@ function hoover(){
 
 document.getElementById("side_box").addEventListener('click',function (event) {
     var box=document.getElementById("form_box");
+    if(mediaq3.matches){
+        if(box.style.transform==="none" || box.style.transform===''){
+            box.style.transform="translateX(-19em)";}
+        else box.style.transform="none";
+    }
+    else{
     if(box.style.transform==="none" || box.style.transform===''){
     box.style.transform="translateX(-40em)";}
-    else box.style.transform="none";
+    else box.style.transform="none";}
 });
 
 window.onscroll=function () {menu()};
